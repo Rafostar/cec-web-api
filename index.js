@@ -46,6 +46,10 @@ function requestListener(req, res)
 				else res.end(JSON.stringify(response, null, 2));
 			});
 		}
+		else if(typeof result === 'object')
+		{
+			result = getObjectFunctions(result);
+		}
 
 		return res.end(JSON.stringify(result, null, 2));
 	}
@@ -56,7 +60,7 @@ function requestListener(req, res)
 
 function getResult(keysArray)
 {
-	var result = Object.assign(ctlObj);
+	var result = Object.assign({}, ctlObj);
 
 	for(var key of keysArray)
 	{
@@ -69,4 +73,19 @@ function getResult(keysArray)
 	}
 
 	return result;
+}
+
+function getObjectFunctions(obj)
+{
+	var tmpObj = Object.assign({}, obj);
+
+	Object.keys(tmpObj).forEach(objKey =>
+	{
+		if(typeof tmpObj[objKey] === 'function')
+			tmpObj[objKey] = 'function';
+		else if(typeof tmpObj[objKey] === 'object')
+			tmpObj[objKey] = getObjectFunctions(tmpObj[objKey]);
+	});
+
+	return tmpObj;
 }
