@@ -8,15 +8,17 @@ var busy = false;
 
 cecCtl.once('ready', readyHandler);
 cecCtl.on('error', console.error);
+module.exports = cecCtl;
 
 function readyHandler(controller)
 {
 	ctlObj = controller;
 
-	const server = http.createServer(requestListener);
+	cecCtl.server = http.createServer(requestListener);
 	const port = (process.argv[2] > 0 && process.argv[2] <= 65535) ? process.argv[2] : 8080;
 
-	server.listen(port);
+	cecCtl.emit('created-server', port);
+	cecCtl.server.listen(port);
 }
 
 function requestListener(req, res)
@@ -41,11 +43,11 @@ function requestListener(req, res)
 
 				if(response === true) res.end('OK');
 				else if(response === null) res.end('ERROR');
-				else res.end(JSON.stringify(response));
+				else res.end(JSON.stringify(response, null, 2));
 			});
 		}
 
-		return res.end(JSON.stringify(result));
+		return res.end(JSON.stringify(result, null, 2));
 	}
 
 	res.writeHead(404);
