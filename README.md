@@ -16,9 +16,10 @@ sudo npm install cec-web-api -g
 ```
 Start server with:
 ```
-cec-web-api [port]
+cec-web-api [port] [--hdmi-ports=<number>]
 ```
-Port number is optional (default: 8080).
+Port number is optional (default: 8080).<br>
+Number of HDMI ports in TV (used for `changeSource` function) can also be specified (default: 3).
 
 ### Usage
 Requests to your host will return controller object. Navigate through it like usual in JavaScript replacing dots with slashes. Use `?value=x` to pass args to available functions. Below example shows how to switch dev0 (TV) HDMI source to a second port.

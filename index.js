@@ -2,7 +2,7 @@ const http = require('http');
 const url = require('url');
 const CecController = require('cec-controller');
 
-var cecCtl = new CecController({ osdString: 'CEC-WEB-API' });
+var cecCtl = new CecController({ osdString: 'CEC-WEB-API', hdmiPorts: getHdmiPorts() });
 var ctlObj = {};
 var busy = false;
 
@@ -88,4 +88,20 @@ function getObjectFunctions(obj)
 	});
 
 	return tmpObj;
+}
+
+function getHdmiPorts()
+{
+	var hdmiPorts = 3;
+	var processHdmi = process.argv.find(arg => arg.includes('--hdmi-ports='));
+
+	if(processHdmi)
+	{
+		var tmpArg = processHdmi.split('=')[1];
+
+		if(!isNaN(tmpArg) && tmpArg > 0)
+			hdmiPorts = tmpArg;
+	}
+
+	return hdmiPorts;
 }
