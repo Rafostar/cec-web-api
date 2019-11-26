@@ -7,7 +7,6 @@ var ctlObj = {};
 var busy = false;
 
 cecCtl.once('ready', readyHandler);
-cecCtl.on('error', console.error);
 module.exports = cecCtl;
 
 function readyHandler(controller)
