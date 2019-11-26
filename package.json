@@ -1,6 +1,6 @@
 {
   "name": "cec-web-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Simple HTTP server to control connected HDMI-CEC devices",
   "main": "index.js",
   "bin": {
