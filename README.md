@@ -24,7 +24,7 @@ Number of HDMI ports in TV (used for `changeSource` function) can also be specif
 ### Usage
 Requests to your host will return controller object. Navigate through it like usual in JavaScript replacing dots with slashes. Use `?value=x` to pass args to available functions. Below example shows how to switch dev0 (TV) HDMI source to a second port.
 ```
-ip:port/dev0/changeSource?value=2
+http://ip:port/dev0/changeSource?value=2
 ```
 For more info on HDMI-CEC usage and available functions visit [cec-controller](https://github.com/Rafostar/cec-controller) GitHub page.
 
