@@ -9,7 +9,7 @@ Requires CEC capable device (e.g. Raspberry Pi or USB-CEC adapter).<br>
 Additionally `cec-client` must be installed. On Raspbian it is included in cec-utils package.
 
 ### Installation
-API can be ased as both core node module or a binary app.<br>
+API can be used as both core node module or a binary app.<br>
 Install it as an app system-wide with below command:
 ```
 sudo npm install cec-web-api -g
