@@ -25,36 +25,45 @@ function requestListener(req, res)
 	var data = url.parse(req.url, true);
 	var result = getResult(data.pathname.split('/'));
 
-	if(result)
+	if(!result)
 	{
-		res.writeHead(200);
-
-		if(typeof result === 'function')
-		{
-			if(busy) return res.end('Previous function is still running!');
-
-			busy = true;
-			var value = (data.query) ? data.query.value : null;
-
-			return result(value).then(response =>
-			{
-				busy = false;
-
-				if(response === true) res.end('OK');
-				else if(response === null) res.end('ERROR');
-				else res.end(JSON.stringify(response, null, 2));
-			});
-		}
-		else if(typeof result === 'object')
-		{
-			result = getObjectFunctions(result);
-		}
-
-		return res.end(JSON.stringify(result, null, 2));
+		res.writeHead(404);
+		return res.end('Invalid Request!');
 	}
 
-	res.writeHead(404);
-	res.end('Invalid Request!');
+	res.writeHead(200);
+
+	if(typeof result === 'function')
+	{
+		if(busy) return res.end('Previous function is still running!');
+
+		busy = true;
+		var value = (data.query) ? data.query.value : null;
+
+		return result(value).then(response =>
+		{
+			busy = false;
+
+			switch(response)
+			{
+				case true:
+					res.end('OK');
+					break;
+				case null:
+					res.end('ERROR');
+					break;
+				default:
+					res.end(JSON.stringify(response, null, 2));
+					break;
+			}
+		});
+	}
+	else if(typeof result === 'object')
+	{
+		result = getObjectFunctions(result);
+	}
+
+	return res.end(JSON.stringify(result, null, 2));
 }
 
 function getResult(keysArray)
